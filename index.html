@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sergio Ayala Sigüenza · Mathematician & Computer Engineer</title>
+<meta name="description" content="Mathematician and computer engineer. Software developer in online payment methods. MSc in Data Science and Machine Learning.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sergio Ayala Sigüenza">
+<meta property="og:description" content="Mathematician and computer engineer · Online payments · Data Science & Machine Learning">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ctext x='32' y='43' font-size='30' font-family='Arial' font-weight='700' text-anchor='middle' fill='%2358a6ff'%3ESA%3C/text%3E%3C/svg%3E">
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add('js');
+  var l = null;
+  try { l = localStorage.getItem('lang'); } catch (e) {}
+  if (l !== 'es' && l !== 'en') {
+    var langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
+    l = 'en';
+    for (var i = 0; i < langs.length; i++) {
+      var c = String(langs[i]).toLowerCase();
+      if (/^es(-|$)/.test(c)) { l = 'es'; break; }
+      if (/^en(-|$)/.test(c)) { l = 'en'; break; }
+    }
+  }
+  d.lang = l;
+  try {
+    var t = localStorage.getItem('theme');
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    d.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    --bg: #070b12;
+    --surface: #0f1623;
+    --border: #243044;
+    --text: #e6edf3;
+    --muted: #8b98a9;
+    --accent: #58a6ff;
+    --accent2: #a78bfa;
+    --accent3: #22d3ee;
+    --net: 88,166,255;
+    --pulse: 34,211,238;
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f8fc;
+    --surface: #ffffff;
+    --border: #d5dde8;
+    --text: #14202e;
+    --muted: #566376;
+    --accent: #0969da;
+    --accent2: #7c3aed;
+    --accent3: #0891b2;
+    --net: 9,105,218;
+    --pulse: 8,145,178;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: var(--bg); }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(700px circle at 12% 8%, rgba(var(--net), .16), transparent 60%),
+      radial-gradient(600px circle at 90% 30%, rgba(167,139,250,.13), transparent 60%),
+      radial-gradient(700px circle at 50% 100%, rgba(var(--pulse), .10), transparent 60%);
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* language switching */
+  html[lang="en"] .es { display: none !important; }
+  html[lang="es"] .en { display: none !important; }
+
+  #net { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  main, header.bar, footer { position: relative; z-index: 1; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
+
+  #progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 30;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    transform-origin: left; transform: scaleX(0);
+  }
+
+  /* top bar */
+  header.bar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; gap: 12px; }
+  .brand { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; color: var(--text); }
+  .brand span { color: var(--muted); font-weight: 400; }
+  .brand:hover { text-decoration: none; }
+  .bar nav { display: flex; gap: 22px; font-size: 14px; }
+  .bar nav a { color: var(--muted); position: relative; padding: 4px 0; }
+  .bar nav a:hover { color: var(--text); text-decoration: none; }
+  .bar nav a.active { color: var(--text); }
+  .bar nav a.active::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .tools { display: flex; gap: 8px; }
+  .tools button {
+    background: color-mix(in srgb, var(--surface) 80%, transparent); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 6px 11px; font-size: 13px; cursor: pointer; font-weight: 600;
+    transition: border-color .15s, transform .15s;
+  }
+  .tools button:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  /* hero */
+  .hero { padding: 84px 0 56px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 44px; align-items: center; }
+  .eyebrow { color: var(--accent3); font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 14px; }
+  h1 {
+    font-size: clamp(38px, 6.4vw, 66px); line-height: 1.04; margin: 0 0 16px; letter-spacing: -.03em;
+    background: linear-gradient(100deg, var(--accent), var(--accent2) 50%, var(--accent3) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shift 9s ease-in-out infinite alternate;
+  }
+  @keyframes shift { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+  .typed-line { font-size: clamp(18px, 2.6vw, 24px); color: var(--accent3); margin: 0 0 20px; min-height: 1.6em; }
+  .typed-line .prompt { color: var(--muted); margin-right: 8px; }
+  .caret { display: inline-block; width: 2px; height: 1.1em; background: currentColor; margin-left: 3px; vertical-align: -.15em; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .lead { max-width: 580px; margin: 0 0 22px; color: color-mix(in srgb, var(--text) 88%, var(--muted)); }
+  .now {
+    display: inline-block; max-width: 100%;
+    background: rgba(var(--net), .10);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 8px 14px; font-size: 14px; margin-bottom: 26px;
+  }
+  .buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 10px; font-size: 14px; font-weight: 600;
+    border: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 80%, transparent); color: var(--text);
+    transition: transform .15s, border-color .15s, box-shadow .15s;
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(var(--net), .18); }
+  .btn.primary { background: linear-gradient(100deg, var(--accent), var(--accent2)); border-color: transparent; color: #fff; }
+
+  /* code window */
+  .window {
+    border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.28);
+  }
+  .window .top { display: flex; align-items: center; gap: 7px; padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .window .fname { margin-left: 8px; font-size: 12px; color: var(--muted); }
+  .window pre { margin: 0; padding: 18px 20px 20px; overflow-x: auto; font-size: 13px; line-height: 1.75; }
+  .window code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .k { color: var(--accent2); } .s { color: var(--accent3); } .f { color: var(--accent); } .c { color: var(--muted); }
+  :root[data-theme="light"] .window { box-shadow: 0 18px 44px rgba(20,32,46,.12); }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-bottom: 30px; }
+  .stat { text-align: center; padding: 20px 14px; }
+  .stat .num {
+    display: block; font-size: clamp(30px, 5vw, 44px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+    background: linear-gradient(100deg, var(--accent), var(--accent3));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat .label { color: var(--muted); font-size: 14px; }
+
+  /* sections */
+  section { padding: 56px 0; }
+  h2 { font-size: clamp(24px, 3.6vw, 32px); margin: 0 0 28px; letter-spacing: -.02em; display: flex; align-items: baseline; gap: 12px; }
+  h2 .idx { font-size: 14px; color: var(--accent); font-weight: 600; }
+  h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); align-self: center; margin-left: 6px; }
+
+  /* cards */
+  .card {
+    position: relative; overflow: hidden;
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border); border-radius: 16px; padding: 22px;
+    transition: border-color .2s, transform .2s;
+  }
+  .card > * { position: relative; }
+  .card::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s;
+    background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 0%), rgba(var(--net), .16), transparent 62%);
+  }
+  .card:hover::before { opacity: 1; }
+  .card:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+
+  /* experience */
+  .job { border-left: 3px solid var(--accent); }
+  .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; margin-bottom: 4px; }
+  .job h3 { margin: 0; font-size: 20px; }
+  .chip {
+    display: inline-block; font-size: 12.5px; font-weight: 600; padding: 3px 11px; border-radius: 999px;
+    background: rgba(var(--net), .12); border: 1px solid var(--border); color: var(--accent);
+  }
+  .job .role-line { color: var(--muted); margin: 0 0 14px; }
+  .job .job-intro { margin: 0 0 12px; }
+  .job + .job { margin-top: 16px; }
+  .job ul { list-style: none; margin: 0; padding: 0; }
+  .job li { position: relative; padding-left: 22px; margin-bottom: 9px; }
+  .job li::before { content: "▹"; position: absolute; left: 0; color: var(--accent3); font-weight: 700; }
+
+  /* education */
+  .grid3 { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+  .edu .glyph {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; font-size: 17px; color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent2)); margin-bottom: 14px;
+  }
+  .edu h3 { margin: 0 0 6px; font-size: 17px; line-height: 1.3; }
+  .edu .uni { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+  .thesis {
+    display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600;
+    border: 1px solid var(--border); padding: 5px 12px; border-radius: 10px;
+    transition: border-color .15s, background .15s;
+  }
+  .thesis:hover { text-decoration: none; border-color: var(--accent); background: rgba(var(--net), .10); }
+
+  .grid3.single { grid-template-columns: minmax(270px, 520px); }
+  .edu .desc { margin: 12px 0 0; color: color-mix(in srgb, var(--text) 85%, var(--muted)); font-size: 15px; }
+
+  /* skills */
+  .card h3.group { margin: 0 0 16px; font-size: 13px; color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .tools-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+  .tool { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 62px; font-size: 12px; color: var(--muted); transition: transform .18s; }
+  .tool img { width: 48px; height: 48px; border-radius: 12px; display: block; }
+  .tool:hover { transform: translateY(-4px); color: var(--text); }
+  .tool.dim img { filter: grayscale(1); opacity: .65; transition: filter .2s, opacity .2s; }
+  .tool.dim:hover img { filter: none; opacity: 1; }
+  .tool .tile { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font-size: 26px; line-height: 1; color: #fff; background: #D97757; }
+
+  /* contact */
+  .cta { text-align: center; padding: 44px 24px; }
+  .cta h3 {
+    margin: 0 0 10px; font-size: clamp(26px, 4.4vw, 38px); letter-spacing: -.02em;
+    background: linear-gradient(100deg, var(--accent), var(--accent2), var(--accent3));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .cta p { color: var(--muted); margin: 0 auto 26px; max-width: 520px; }
+  .cta .buttons { justify-content: center; }
+
+  footer { border-top: 1px solid var(--border); padding: 26px 0 40px; color: var(--muted); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  /* reveal on scroll */
+  .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-top: 52px; gap: 32px; }
+    .bar nav { display: none; }
+  }
+  @media (max-width: 520px) {
+    .brand span { display: none; }
+    .stats { gap: 10px; }
+    .stat { padding: 16px 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    h1 { animation: none; }
+    .caret { animation: none; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .btn, .tool, .card, .tools button { transition: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<div id="progress" aria-hidden="true"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">seayala<span>.github.io</span></a>
+    <nav aria-label="Sections">
+      <a href="#experience"><span class="en">Experience</span><span class="es">Experiencia</span></a>
+      <a href="#education"><span class="en">Education</span><span class="es">Formación</span></a>
+      <a href="#projects"><span class="en">Projects</span><span class="es">Proyectos</span></a>
+      <a href="#skills"><span class="en">Skills</span><span class="es">Habilidades</span></a>
+      <a href="#contact"><span class="en">Contact</span><span class="es">Contacto</span></a>
+    </nav>
+    <div class="tools">
+      <button id="lang" type="button" aria-label="Change language">ES</button>
+      <button id="theme" type="button" aria-label="Toggle light and dark theme">☀️</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="reveal">
+        <p class="eyebrow">
+          <span class="en">Payments · Data · Machine Learning</span><span class="es">Pagos · Datos · Machine Learning</span>
+          
+        </p>
+        <h1>Sergio Ayala Sigüenza</h1>
+        <p class="typed-line mono" aria-live="off"><span class="prompt">&gt;</span><span id="typed">Mathematician</span><span class="caret"></span></p>
+        <p class="lead">
+          <span class="en">I build software for <strong>online payment methods</strong> at Arsys Internet S.L.U. With an MSc in Data Science and Machine Learning, I’m interested in the intersection of payments, data and ML: reliable systems, fraud detection and models that work in production.</span><span class="es">Desarrollo software de <strong>métodos de pago online</strong> en Arsys Internet S.L.U. Con un máster en Ciencia de Datos y Aprendizaje Automático, me interesa el cruce entre pagos, datos y ML: sistemas fiables, detección de fraude y modelos que funcionan en producción.</span>
+          
+        </p>
+        <div class="now">
+          🌱
+          <span class="en">Currently learning graph neural networks and MLOps to build better fraud detection systems</span><span class="es">Aprendiendo redes neuronales de grafos y MLOps para construir mejores sistemas de detección de fraude</span>
+          
+        </div>
+        <div class="buttons">
+          <a class="btn primary en" href="Sergio_Ayala_CV_EN.pdf" download>Download CV ↓</a>
+          <a class="btn primary es" href="Sergio_Ayala_CV_ES.pdf" download>Descargar CV ↓</a>
+          <a class="btn" href="https://es.linkedin.com/in/sergio-ayala-sig%C3%BCenza-a81408308" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/seayala" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="mailto:sergio.ayala.20@gmail.com">Email</a>
+        </div>
+      </div>
+
+      <div class="window reveal" style="--d:.15s" aria-hidden="true">
+        <div class="top"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fname mono">sergio.py</span></div>
+<pre><code><span class="k">class</span> <span class="f">Sergio</span>:
+    <span class="c"># math + cs + ml</span>
+    degrees = [
+        <span class="s">"BSc Mathematics"</span>,
+        <span class="s">"BSc Computer Engineering"</span>,
+        <span class="s">"MSc Data Science &amp; ML"</span>,
+    ]
+    works_on = <span class="s">"online payments"</span>
+    stack = [<span class="s">"PHP"</span>, <span class="s">"Go"</span>,
+             <span class="s">"Python"</span>, <span class="s">"PostgreSQL"</span>]
+    learning = [<span class="s">"GNNs"</span>, <span class="s">"MLOps"</span>]
+</code></pre>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="card stat reveal">
+        <span class="num"><span data-count="3">3</span></span>
+        <span class="label"><span class="en">degrees: 2 BSc + 1 MSc</span><span class="es">titulaciones: 2 grados + 1 máster</span></span>
+      </div>
+      <div class="card stat reveal" style="--d:.1s">
+        <span class="num"><span data-count="2">2</span></span>
+        <span class="label"><span class="en">new payment methods shipped</span><span class="es">nuevos métodos de pago lanzados</span></span>
+      </div>
+      <div class="card stat reveal" style="--d:.2s">
+        <span class="num"><span data-count="2" id="years">2</span>+</span>
+        <span class="label"><span class="en">years in online payments</span><span class="es">años en pagos online</span></span>
+      </div>
+    </div>
+
+    <section id="experience">
+      <h2 class="reveal"><span class="idx mono">01</span><span class="en">Experience</span><span class="es">Experiencia</span></h2>
+
+      <div class="card job reveal">
+        <div class="job-head">
+          <h3>Arsys Internet S.L.U.</h3>
+          <span class="chip"><span class="en">June 2024 – present</span><span class="es">Junio 2024 – actualidad</span></span>
+        </div>
+        <p class="role-line"><span class="en">Software Engineer, Online Payment Methods</span><span class="es">Ingeniero de Software, Métodos de Pago Online</span></p>
+        <p class="job-intro"><span class="en">Software developer working on online payment methods with PHP, Go, Python and PostgreSQL.</span><span class="es">Desarrollador de software de métodos de pago online con PHP, Go, Python y PostgreSQL.</span></p>
+        <ul>
+          <li><span class="en">Designed and implemented two new payment methods end to end, from integration to production release</span><span class="es">Diseño e implementación de dos nuevos métodos de pago de principio a fin, desde la integración hasta la puesta en producción</span></li>
+          <li><span class="en">Diagnosed and fixed issues in live payment flows, reducing incidents and improving the user experience</span><span class="es">Diagnóstico y resolución de incidencias en flujos de pago en producción, reduciendo incidentes y mejorando la experiencia de usuario</span></li>
+          <li><span class="en">Improved the reliability of payment processing</span><span class="es">Mejora de la fiabilidad del procesamiento de pagos</span></li>
+          <li><span class="en">Maintain and evolve existing payment methods in production, keeping them stable and up to date</span><span class="es">Mantenimiento y evolución de los métodos de pago existentes en producción, manteniéndolos estables y actualizados</span></li>
+        </ul>
+      </div>
+
+      <div class="card job reveal" style="--d:.1s">
+        <div class="job-head">
+          <h3>Arsys Internet S.L.U.</h3>
+          <span class="chip"><span class="en">September 2023 – May 2024</span><span class="es">Septiembre 2023 – Mayo 2024</span></span>
+        </div>
+        <p class="role-line"><span class="en">Software Developer (Internship), Cloud Services</span><span class="es">Desarrollador de Software (Prácticas), Servicios en la Nube</span></p>
+        <p class="job-intro"><span class="en">Internship as a cloud services developer, working with PHP on web software.</span><span class="es">Prácticas como desarrollador de servicios en la nube, trabajando con PHP en software web.</span></p>
+        <ul>
+          <li><span class="en">Took part in the design and development of cloud services, applying software design and engineering practices</span><span class="es">Participación en el diseño y desarrollo de servicios en la nube, aplicando prácticas de diseño e ingeniería de software</span></li>
+          <li><span class="en">Completed my Bachelor’s thesis in Computer Engineering during the internship</span><span class="es">Realización del Trabajo Fin de Grado de Ingeniería Informática durante las prácticas</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2 class="reveal"><span class="idx mono">02</span><span class="en">Education</span><span class="es">Formación</span></h2>
+      <div class="grid3">
+
+        <div class="card edu reveal">
+          <div class="glyph">∇</div>
+          <h3><span class="en">MSc in Data Science and Machine Learning</span><span class="es">Máster en Ciencia de Datos y Aprendizaje Automático</span></h3>
+          <p class="uni"><span class="en">University of La Rioja</span><span class="es">Universidad de La Rioja</span></p>
+          <span class="chip">2024 – 2026</span>
+        </div>
+
+        <div class="card edu reveal" style="--d:.1s">
+          <div class="glyph">&lt;/&gt;</div>
+          <h3><span class="en">BSc in Computer Engineering</span><span class="es">Grado en Ingeniería Informática</span></h3>
+          <p class="uni"><span class="en">University of La Rioja</span><span class="es">Universidad de La Rioja</span></p>
+          <span class="chip">2019 – 2024</span><br>
+          <a class="thesis" href="https://investigacion.unirioja.es/documentos/677ce83d6640ab12237120c2" target="_blank" rel="noopener">📄 <span class="en">Bachelor’s thesis</span><span class="es">Trabajo Fin de Grado</span></a>
+        </div>
+
+        <div class="card edu reveal" style="--d:.2s">
+          <div class="glyph">∑</div>
+          <h3><span class="en">BSc in Mathematics</span><span class="es">Grado en Matemáticas</span></h3>
+          <p class="uni"><span class="en">University of La Rioja</span><span class="es">Universidad de La Rioja</span></p>
+          <span class="chip">2018 – 2023</span><br>
+          <a class="thesis" href="https://investigacion.unirioja.es/documentos/655c9893da93c5320dbe71a7" target="_blank" rel="noopener">📄 <span class="en">Bachelor’s thesis</span><span class="es">Trabajo Fin de Grado</span></a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="reveal"><span class="idx mono">03</span><span class="en">Projects</span><span class="es">Proyectos</span></h2>
+      <div class="grid3">
+        <div class="card edu reveal">
+          <div class="glyph">🎮</div>
+          <h3>Ahorcado2</h3>
+          <p class="uni"><span class="en">Online hangman game</span><span class="es">Juego del ahorcado online</span></p>
+          <span class="chip"><span class="en">University project</span><span class="es">Proyecto universitario</span></span>
+          <p class="desc"><span class="en">An online version of the classic hangman game, developed as a university project. Source code available in a public repository.</span><span class="es">Versión online del clásico juego del ahorcado, desarrollada como proyecto universitario. Código fuente disponible en un repositorio público.</span></p>
+          <a class="thesis" href="https://github.com/seayala/Ahorcado2" target="_blank" rel="noopener"><span class="en">View on GitHub ↗</span><span class="es">Ver en GitHub ↗</span></a>
+        </div>
+
+        <div class="card edu reveal" style="--d:.1s">
+          <div class="glyph">🤗</div>
+          <h3>Hugging Face</h3>
+          <p class="uni"><span class="en">Machine learning work</span><span class="es">Trabajos de aprendizaje automático</span></p>
+          <span class="chip"><span class="en">MSc work</span><span class="es">Trabajo del máster</span></span>
+          <p class="desc"><span class="en">Machine learning work from my MSc in Data Science and Machine Learning, published on my Hugging Face profile.</span><span class="es">Trabajos de aprendizaje automático de mi Máster en Ciencia de Datos y Aprendizaje Automático, publicados en mi perfil de Hugging Face.</span></p>
+          <a class="thesis" href="https://huggingface.co/seayala" target="_blank" rel="noopener"><span class="en">View profile ↗</span><span class="es">Ver perfil ↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="reveal"><span class="idx mono">04</span><span class="en">Skills</span><span class="es">Habilidades</span></h2>
+      <div class="grid3">
+
+        <div class="card reveal">
+          <h3 class="group"><span class="en">Day to day</span><span class="es">Día a día</span></h3>
+          <div class="tools-grid">
+            <div class="tool"><img src="https://skillicons.dev/icons?i=php" alt="" width="48" height="48" loading="lazy"><span>PHP</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=go" alt="" width="48" height="48" loading="lazy"><span>Go</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=python" alt="" width="48" height="48" loading="lazy"><span>Python</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=postgres" alt="" width="48" height="48" loading="lazy"><span>Postgres</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=docker" alt="" width="48" height="48" loading="lazy"><span>Docker</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=git" alt="" width="48" height="48" loading="lazy"><span>Git</span></div>
+          </div>
+        </div>
+
+        <div class="card reveal" style="--d:.1s">
+          <h3 class="group"><span class="en">Data science &amp; ML</span><span class="es">Ciencia de datos y ML</span></h3>
+          <div class="tools-grid">
+            <div class="tool"><img src="https://skillicons.dev/icons?i=python" alt="" width="48" height="48" loading="lazy"><span>Python</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=sklearn" alt="" width="48" height="48" loading="lazy"><span>scikit-learn</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=pytorch" alt="" width="48" height="48" loading="lazy"><span>PyTorch</span></div>
+            <div class="tool"><img src="https://skillicons.dev/icons?i=tensorflow" alt="" width="48" height="48" loading="lazy"><span>TensorFlow</span></div>
+          </div>
+        </div>
+
+        <div class="card reveal" style="--d:.2s">
+          <h3 class="group"><span class="en">Also worked with</span><span class="es">También he trabajado con</span></h3>
+          <div class="tools-grid">
+            <div class="tool dim"><img src="https://skillicons.dev/icons?i=java" alt="" width="48" height="48" loading="lazy"><span>Java</span></div>
+            <div class="tool dim"><img src="https://skillicons.dev/icons?i=js" alt="" width="48" height="48" loading="lazy"><span>JS</span></div>
+            <div class="tool dim"><img src="https://skillicons.dev/icons?i=c" alt="" width="48" height="48" loading="lazy"><span>C</span></div>
+            <div class="tool dim"><img src="https://skillicons.dev/icons?i=cpp" alt="" width="48" height="48" loading="lazy"><span>C++</span></div>
+            <div class="tool dim"><img src="https://skillicons.dev/icons?i=cs" alt="" width="48" height="48" loading="lazy"><span>C#</span></div>
+          </div>
+        </div>
+
+        <div class="card reveal" style="--d:.3s">
+          <h3 class="group"><span class="en">AI tools</span><span class="es">Herramientas de IA</span></h3>
+          <div class="tools-grid">
+            <div class="tool"><span class="tile" aria-hidden="true">✺</span><span>Claude</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="reveal"><span class="idx mono">05</span><span class="en">Contact</span><span class="es">Contacto</span></h2>
+      <div class="card cta reveal">
+        <h3><span class="en">Let’s talk</span><span class="es">Hablemos</span></h3>
+        <p>
+          <span class="en">Happy to chat about online payments, machine learning or mathematics.</span><span class="es">Encantado de hablar sobre pagos online, aprendizaje automático o matemáticas.</span>
+          
+        </p>
+        <div class="buttons">
+          <a class="btn primary" href="mailto:sergio.ayala.20@gmail.com">sergio.ayala.20@gmail.com</a>
+          <a class="btn en" href="Sergio_Ayala_CV_EN.pdf" download>Download CV ↓</a>
+          <a class="btn es" href="Sergio_Ayala_CV_ES.pdf" download>Descargar CV ↓</a>
+          <a class="btn" href="https://es.linkedin.com/in/sergio-ayala-sig%C3%BCenza-a81408308" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/seayala" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Sergio Ayala Sigüenza</span>
+    <a href="#top"><span class="en">Back to top ↑</span><span class="es">Volver arriba ↑</span></a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var themeBtn = document.getElementById('theme');
+  var langBtn = document.getElementById('lang');
+  var typedEl = document.getElementById('typed');
+
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  /* ---------- animated network background ---------- */
+  var canvas = document.getElementById('net');
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, nodes = [], pulses = [];
+  var mouse = { x: -9999, y: -9999, on: false };
+  var rgb = '88,166,255', prgb = '34,211,238';
+  var LINK = 135, MOUSE_R = 170;
+  var lastTs = 0, sinceSpawn = 0;
+
+  function readColors() {
+    var cs = getComputedStyle(root);
+    rgb = cs.getPropertyValue('--net').trim() || rgb;
+    prgb = cs.getPropertyValue('--pulse').trim() || prgb;
+    if (reduce && W) draw(0);
+  }
+
+  function initNetwork() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.max(28, Math.min(85, Math.round(W * H / 17000)));
+    nodes = []; pulses = [];
+    for (var i = 0; i < n; i++) {
+      nodes.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28,
+        r: 1 + Math.random() * 1.6
+      });
+    }
+    if (reduce) draw(0);
+  }
+
+  function draw(dt) {
+    var f = dt / 16.7, i, j, a, b, dx, dy, d, alpha;
+    ctx.clearRect(0, 0, W, H);
+
+    if (dt > 0) {
+      for (i = 0; i < nodes.length; i++) {
+        a = nodes[i];
+        a.x += a.vx * f; a.y += a.vy * f;
+        if (mouse.on) {
+          dx = mouse.x - a.x; dy = mouse.y - a.y;
+          if (dx * dx + dy * dy < MOUSE_R * MOUSE_R) { a.x += dx * 0.004 * f; a.y += dy * 0.004 * f; }
+        }
+        if (a.x < -10) a.x = W + 10; else if (a.x > W + 10) a.x = -10;
+        if (a.y < -10) a.y = H + 10; else if (a.y > H + 10) a.y = -10;
+      }
+    }
+
+    ctx.lineWidth = 1;
+    for (i = 0; i < nodes.length; i++) {
+      a = nodes[i];
+      for (j = i + 1; j < nodes.length; j++) {
+        b = nodes[j];
+        dx = a.x - b.x; dy = a.y - b.y; d = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK) {
+          alpha = (1 - d / LINK) * 0.32;
+          ctx.strokeStyle = 'rgba(' + rgb + ',' + alpha + ')';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      if (mouse.on) {
+        dx = a.x - mouse.x; dy = a.y - mouse.y; d = Math.sqrt(dx * dx + dy * dy);
+        if (d < MOUSE_R) {
+          alpha = (1 - d / MOUSE_R) * 0.5;
+          ctx.strokeStyle = 'rgba(' + prgb + ',' + alpha + ')';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        }
+      }
+    }
+
+    ctx.fillStyle = 'rgba(' + rgb + ',0.7)';
+    for (i = 0; i < nodes.length; i++) {
+      a = nodes[i];
+      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
+    }
+
+    if (dt > 0) {
+      sinceSpawn += dt;
+      if (sinceSpawn > 800 && pulses.length < 8) {
+        sinceSpawn = 0;
+        var ai = Math.floor(Math.random() * nodes.length), near = [];
+        a = nodes[ai];
+        for (j = 0; j < nodes.length; j++) {
+          if (j === ai) continue;
+          dx = a.x - nodes[j].x; dy = a.y - nodes[j].y;
+          if (dx * dx + dy * dy < LINK * LINK) near.push(j);
+        }
+        if (near.length) pulses.push({ a: ai, b: near[Math.floor(Math.random() * near.length)], t: 0 });
+      }
+      for (i = pulses.length - 1; i >= 0; i--) {
+        var p = pulses[i];
+        p.t += dt / 900;
+        if (p.t >= 1) { pulses.splice(i, 1); continue; }
+        a = nodes[p.a]; b = nodes[p.b];
+        var px = a.x + (b.x - a.x) * p.t, py = a.y + (b.y - a.y) * p.t;
+        ctx.fillStyle = 'rgba(' + prgb + ',0.18)';
+        ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(' + prgb + ',0.95)';
+        ctx.beginPath(); ctx.arc(px, py, 2.4, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+  }
+
+  function frame(ts) {
+    var dt = Math.min(ts - lastTs, 50);
+    lastTs = ts;
+    draw(dt);
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------- typing effect ---------- */
+  var roles = {
+    en: ['Mathematician', 'Computer engineer', 'Payments software developer', 'Data science & ML'],
+    es: ['Matemático', 'Ingeniero informático', 'Desarrollador de software de pagos', 'Ciencia de datos y ML']
+  };
+  var ti = 0, ci = 0, deleting = false, typeTimer = null;
+
+  function typeTick() {
+    var list = roles[root.lang] || roles.en;
+    var word = list[ti % list.length];
+    if (!deleting) {
+      ci++;
+      typedEl.textContent = word.slice(0, ci);
+      if (ci >= word.length) { deleting = true; typeTimer = setTimeout(typeTick, 1700); return; }
+      typeTimer = setTimeout(typeTick, 70);
+    } else {
+      ci--;
+      typedEl.textContent = word.slice(0, ci);
+      if (ci <= 0) { deleting = false; ti++; typeTimer = setTimeout(typeTick, 350); return; }
+      typeTimer = setTimeout(typeTick, 35);
+    }
+  }
+  function startTyping() {
+    clearTimeout(typeTimer);
+    ti = 0; ci = 0; deleting = false;
+    if (reduce) { typedEl.textContent = (roles[root.lang] || roles.en)[0]; return; }
+    typeTick();
+  }
+
+  /* ---------- language and theme ---------- */
+  function applyLang(l) {
+    root.lang = l;
+    langBtn.textContent = l === 'en' ? 'ES' : 'EN';
+    langBtn.setAttribute('aria-label', l === 'en' ? 'Cambiar a español' : 'Switch to English');
+    document.title = l === 'en'
+      ? 'Sergio Ayala Sigüenza · Mathematician & Computer Engineer'
+      : 'Sergio Ayala Sigüenza · Matemático e Ingeniero Informático';
+    startTyping();
+  }
+  function applyTheme(t) {
+    root.setAttribute('data-theme', t);
+    themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+    readColors();
+  }
+
+  /* ---------- counters and reveal ---------- */
+  function countUp(el) {
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    if (reduce) { el.textContent = target; return; }
+    var start = null, dur = 1100;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    el.textContent = 0;
+    requestAnimationFrame(step);
+  }
+
+  function setupReveal() {
+    var items = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        [].slice.call(e.target.querySelectorAll('[data-count]')).forEach(countUp);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- scroll progress and active link ---------- */
+  var progress = document.getElementById('progress');
+  var links = [].slice.call(document.querySelectorAll('.bar nav a'));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = 'scaleX(' + (h > 0 ? window.scrollY / h : 0) + ')';
+    var y = window.scrollY + window.innerHeight * 0.35, cur = -1;
+    sections.forEach(function (s, i) { if (s && s.offsetTop <= y) cur = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  }
+
+  /* ---------- init ---------- */
+  var theme = get('theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+  var lang = root.lang === 'es' ? 'es' : 'en';
+
+  initNetwork();
+  applyTheme(theme);
+  applyLang(lang);
+  setupReveal();
+  onScroll();
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var yearsEl = document.getElementById('years');
+  var years = Math.max(1, Math.floor((Date.now() - new Date(2024, 5, 1).getTime()) / 31557600000));
+  yearsEl.setAttribute('data-count', years);
+  yearsEl.textContent = years;
+
+  if (!reduce) requestAnimationFrame(function (ts) { lastTs = ts; requestAnimationFrame(frame); });
+
+  langBtn.addEventListener('click', function () {
+    lang = lang === 'en' ? 'es' : 'en';
+    set('lang', lang); applyLang(lang);
+  });
+  themeBtn.addEventListener('click', function () {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    set('theme', theme); applyTheme(theme);
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth !== W || Math.abs(window.innerHeight - H) > 150) initNetwork();
+    onScroll();
+  });
+  window.addEventListener('pointermove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; mouse.on = true; });
+  document.addEventListener('pointerleave', function () { mouse.on = false; });
+
+  document.addEventListener('pointermove', function (e) {
+    var t = e.target.closest ? e.target.closest('.card') : null;
+    if (!t) return;
+    var r = t.getBoundingClientRect();
+    t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+})();
+</script>
+</body>
+</html>
